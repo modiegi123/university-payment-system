@@ -1,6 +1,0 @@
-node_modules/
-dist/
-.env
-*.log
-dotnet-backend/bin/
-dotnet-backend/obj/

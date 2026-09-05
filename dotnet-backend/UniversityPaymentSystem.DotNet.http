@@ -1,6 +1,0 @@
-@UniversityPaymentSystem.DotNet_HostAddress = http://localhost:5038
-
-GET {{UniversityPaymentSystem.DotNet_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
