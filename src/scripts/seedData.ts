@@ -7,7 +7,44 @@ import Student from '../models/Student';
 dotenv.config();
 
 const seedRegistrationCycles = async () => {
+  const now = new Date();
+  const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+  const oneYearAhead = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+
   const cycles = [
+    {
+      name: 'Demo Registration Cycle (Always Open)',
+      description: 'A demo registration cycle kept open year-round so this project can be tried out live.',
+      academicYear: `${now.getFullYear()}`,
+      semester: '1',
+      startDate: oneYearAgo,
+      endDate: oneYearAhead,
+      isActive: true,
+      fees: {
+        registrationFee: 5000,
+        lateRegistrationFee: 1000,
+        residenceApplicationFee: 2000
+      },
+      bankingDetails: {
+        accountNumber: '1234567890',
+        accountName: 'University of Technology',
+        bankName: 'Standard Bank',
+        branchCode: '051001',
+        reference: 'UNI-REG-DEMO'
+      },
+      campuses: [
+        { id: 'main-campus', name: 'Main Campus', isActive: true },
+        { id: 'north-campus', name: 'North Campus', isActive: true },
+        { id: 'south-campus', name: 'South Campus', isActive: true }
+      ],
+      subjects: [
+        { id: 'subj-d01', code: 'MATH101', name: 'Mathematics 101', credits: 12, fee: 3000, campus: 'main-campus', isActive: true },
+        { id: 'subj-d02', code: 'ENG101', name: 'English 101', credits: 12, fee: 2500, campus: 'main-campus', isActive: true },
+        { id: 'subj-d03', code: 'CS101', name: 'Computer Science 101', credits: 15, fee: 4000, campus: 'main-campus', isActive: true },
+        { id: 'subj-d04', code: 'PHYS101', name: 'Physics 101', credits: 12, fee: 3500, campus: 'north-campus', isActive: true },
+        { id: 'subj-d05', code: 'CHEM101', name: 'Chemistry 101', credits: 12, fee: 3200, campus: 'south-campus', isActive: true }
+      ]
+    },
     {
       name: '2024 Semester 1 Registration',
       description: 'Registration for the first semester of 2024',

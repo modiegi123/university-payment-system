@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>University Payment System | Live Demo</title>
+<meta name="description" content="Live demo of the University Payment System backend - a delayed authorize/capture payment flow for university registration.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container navbar">
+    <span class="logo">UniPay<span class="accent">.</span></span>
+    <span id="userChip" class="user-chip hidden"></span>
+  </div>
+</header>
+
+<div class="demo-banner container">
+  ⚠️ This is a portfolio demo. Do not enter real banking details — any values are accepted and never leave this demo's own database.
+</div>
+
+<main class="container">
+
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="auth">Register / Login</button>
+    <button class="tab-btn" data-tab="dashboard" disabled>Dashboard</button>
+    <button class="tab-btn" data-tab="registration" disabled>Register for Courses</button>
+    <button class="tab-btn" data-tab="payments" disabled>My Payments</button>
+  </nav>
+
+  <!-- AUTH -->
+  <section class="tab-panel active" id="tab-auth">
+    <div class="two-col">
+      <div class="card">
+        <h2>Create an account</h2>
+        <form id="registerForm">
+          <label>Student Number <span class="hint">(6-20 chars, letters &amp; numbers)</span>
+            <input type="text" name="studentNumber" placeholder="STU123456" required>
+          </label>
+          <label>Email
+            <input type="email" name="email" placeholder="you@student.university.ac.za" required>
+          </label>
+          <label>Phone Number
+            <input type="tel" name="phoneNumber" placeholder="+27123456789" required>
+          </label>
+          <div class="field-row">
+            <label>First Name
+              <input type="text" name="firstName" required>
+            </label>
+            <label>Last Name
+              <input type="text" name="lastName" required>
+            </label>
+          </div>
+          <label>Date of Birth
+            <input type="date" name="dateOfBirth" required>
+          </label>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <p class="form-message" id="registerMessage"></p>
+      </div>
+
+      <div class="card">
+        <h2>Log in</h2>
+        <form id="loginForm">
+          <label>Student Number
+            <input type="text" name="studentNumber" placeholder="STU001" required>
+          </label>
+          <label>Email
+            <input type="email" name="email" placeholder="john.doe@student.university.ac.za" required>
+          </label>
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
+        <p class="form-message" id="loginMessage"></p>
+        <p class="hint">
+          Try a seeded demo account: <code>STU001</code> / <code>john.doe@student.university.ac.za</code>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="tab-panel" id="tab-dashboard">
+    <h2>Dashboard</h2>
+    <div class="stats-grid" id="statsGrid"></div>
+    <h3>Recent Payments</h3>
+    <div id="recentPayments" class="list"></div>
+  </section>
+
+  <!-- REGISTRATION -->
+  <section class="tab-panel" id="tab-registration">
+    <h2>Register for Courses</h2>
+    <div class="card">
+      <label>Registration Cycle
+        <select id="cycleSelect"></select>
+      </label>
+      <label>Campus
+        <select id="campusSelect"></select>
+      </label>
+      <div id="subjectsList" class="checkbox-list"></div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="residenceCheckbox">
+        Apply for on-campus residence
+      </label>
+      <button class="btn btn-outline" id="calculateFeesBtn">Calculate Fees</button>
+
+      <div id="feeBreakdown" class="fee-breakdown hidden"></div>
+
+      <form id="payForm" class="hidden">
+        <h3>Banking Details <span class="hint">(demo only — use any fake values)</span></h3>
+        <label>Account Holder
+          <input type="text" name="accountHolder" placeholder="Jane Doe" required>
+        </label>
+        <div class="field-row">
+          <label>Account Number
+            <input type="text" name="accountNumber" placeholder="12345678" required>
+          </label>
+          <label>Branch Code
+            <input type="text" name="branchCode" placeholder="051001" required>
+          </label>
+        </div>
+        <div class="field-row">
+          <label>Bank Name
+            <input type="text" name="bankName" placeholder="Standard Bank" required>
+          </label>
+          <label>Account Type
+            <select name="accountType">
+              <option value="savings">Savings</option>
+              <option value="cheque">Cheque</option>
+              <option value="current">Current</option>
+            </select>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Authorize Payment</button>
+      </form>
+      <p class="form-message" id="registrationMessage"></p>
+    </div>
+  </section>
+
+  <!-- PAYMENTS -->
+  <section class="tab-panel" id="tab-payments">
+    <h2>My Payments</h2>
+    <button class="btn btn-outline" id="refreshPaymentsBtn">Refresh</button>
+    <div id="paymentsList" class="list"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>
+    Live demo of the
+    <a href="https://github.com/modiegi123/university-payment-system" target="_blank" rel="noopener">University Payment System</a>
+    backend &middot; built by Modiegi
+  </p>
+</footer>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
