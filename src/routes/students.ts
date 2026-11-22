@@ -85,7 +85,7 @@ router.get('/dashboard', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -136,7 +136,7 @@ router.get('/payments', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -185,7 +185,7 @@ router.get('/transactions', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -304,7 +304,7 @@ router.get('/statistics', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

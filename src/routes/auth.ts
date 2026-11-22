@@ -103,7 +103,7 @@ router.post('/register', [
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -162,7 +162,7 @@ router.post('/login', [
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -190,7 +190,7 @@ router.get('/profile', async (req: AuthRequest, res: Response, next: NextFunctio
       student
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -214,7 +214,7 @@ router.put('/profile', [
     .optional()
     .isMobilePhone('any')
     .withMessage('Valid WhatsApp number is required if provided')
-], async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+], async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -258,7 +258,7 @@ router.put('/profile', [
       student
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

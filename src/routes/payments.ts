@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Response, NextFunction } from 'express';
 import { body, validationResult } from 'express-validator';
 import Payment from '../models/Payment';
 import RegistrationCycle from '../models/RegistrationCycle';
@@ -48,7 +48,7 @@ router.post('/authorize', [
     .optional()
     .isIn(['on-campus', 'off-campus'])
     .withMessage('Valid residence type is required')
-], async (req: AuthRequest, res, next) => {
+], async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -220,7 +220,7 @@ router.post('/authorize', [
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -304,7 +304,7 @@ router.post('/capture/:paymentId', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -363,7 +363,7 @@ router.get('/:paymentId', async (req: AuthRequest, res, next) => {
       }))
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -406,7 +406,7 @@ router.get('/', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -419,7 +419,7 @@ router.post('/refund/:paymentId', [
     .optional()
     .isFloat({ min: 0 })
     .withMessage('Refund amount must be positive')
-], async (req: AuthRequest, res, next) => {
+], async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -511,7 +511,7 @@ router.post('/refund/:paymentId', [
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -568,7 +568,7 @@ router.post('/cancel/:paymentId', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

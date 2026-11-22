@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Response, NextFunction } from 'express';
 import { body, validationResult } from 'express-validator';
 import RegistrationCycle from '../models/RegistrationCycle';
 import Payment from '../models/Payment';
@@ -36,7 +36,7 @@ router.get('/cycles', async (req: AuthRequest, res, next) => {
       }))
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -70,7 +70,7 @@ router.get('/cycles/:cycleId', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -174,7 +174,7 @@ router.get('/cycles/:cycleId/status', async (req: AuthRequest, res, next) => {
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -209,7 +209,7 @@ router.get('/cycles/:cycleId/subjects', async (req: AuthRequest, res, next) => {
       }))
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -225,7 +225,7 @@ router.post('/cycles/:cycleId/calculate-fees', [
     .optional()
     .isBoolean()
     .withMessage('Residence application must be boolean')
-], async (req: AuthRequest, res, next) => {
+], async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -288,7 +288,7 @@ router.post('/cycles/:cycleId/calculate-fees', [
       residenceApplication: residenceApplication || { applied: false }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
