@@ -21,17 +21,17 @@ export class EncryptionService {
       const iv = crypto.randomBytes(IV_LENGTH);
       const salt = crypto.randomBytes(SALT_LENGTH);
       const key = crypto.pbkdf2Sync(this.getKey(), salt, 100000, 32, 'sha512');
-      
-      const cipher = crypto.createCipher(ALGORITHM, key);
+
+      const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
       cipher.setAAD(salt);
-      
+
       const encrypted = Buffer.concat([
         cipher.update(text, 'utf8'),
         cipher.final()
       ]);
-      
+
       const tag = cipher.getAuthTag();
-      
+
       return Buffer.concat([salt, iv, tag, encrypted]).toString('base64');
     } catch (error) {
       throw new Error(`Encryption failed: ${error}`);
@@ -41,27 +41,27 @@ export class EncryptionService {
   static decrypt(encryptedData: string): string {
     try {
       const buffer = Buffer.from(encryptedData, 'base64');
-      
+
       if (buffer.length < ENCRYPTED_POSITION) {
         throw new Error('Invalid encrypted data');
       }
-      
+
       const salt = buffer.subarray(0, SALT_LENGTH);
       const iv = buffer.subarray(SALT_LENGTH, TAG_POSITION);
       const tag = buffer.subarray(TAG_POSITION, ENCRYPTED_POSITION);
       const encrypted = buffer.subarray(ENCRYPTED_POSITION);
-      
+
       const key = crypto.pbkdf2Sync(this.getKey(), salt, 100000, 32, 'sha512');
-      
-      const decipher = crypto.createDecipher(ALGORITHM, key);
+
+      const decipher = crypto.createDecipheriv(ALGORITHM, key, iv);
       decipher.setAAD(salt);
       decipher.setAuthTag(tag);
-      
+
       const decrypted = Buffer.concat([
         decipher.update(encrypted),
         decipher.final()
       ]);
-      
+
       return decrypted.toString('utf8');
     } catch (error) {
       throw new Error(`Decryption failed: ${error}`);
